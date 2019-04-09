@@ -44,12 +44,12 @@ function GreenEcho() {
 # 服务器配置菜单
 ##
 function ConfigList(){
-    echo "- 序号	IP		别名"
+    echo "- 序号	IP		别名		服务器名称"
     for ((i=0;i<${CONFIG_LENGTH};i++));
     do
         CONFIG=(${CONFIGS[$i]}) #将一维sites字符串赋值到数组
         serverNum=$(($i+1))
-        echo "- [${serverNum}]	${CONFIG[3]}	${CONFIG[0]}"
+        echo "- [${serverNum}]	${CONFIG[3]}	${CONFIG[0]}	${CONFIG[1]}"
     done
 }
 
@@ -61,7 +61,7 @@ function LoginMenu(){
         AutoLogin $1
     else
         echo "-------请输入登录的服务器序号或别名---------"
-        ConfigList
+        ConfigList | column -t
         echo "请输入您选择登录的服务器序号或别名: "
     fi
 }
@@ -168,7 +168,7 @@ function GetServer(){
 ##
 if [ 1 == $# ]; then
     if [ 'list' == $1 ]; then
-        ConfigList
+        ConfigList | column -t
     else
         AutoLogin $1
     fi
